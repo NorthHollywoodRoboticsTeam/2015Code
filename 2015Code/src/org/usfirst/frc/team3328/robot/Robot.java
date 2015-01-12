@@ -18,8 +18,29 @@ import robotemulator.*;
  */
 public class Robot extends IterativeRobot {
 	
-	Joystick js1 = new Joystick(1);
-	Joystick js2 = new Joystick(2);
+	static Joystick js1;
+	static Joystick js2;
+	static Joystick js3;
+	
+	public Robot() {
+		js1 = new Joystick(1);
+		js2 = new Joystick(2);
+		js3 = new Joystick(3);
+	}
+	
+	public static Joystick getJs1() {
+		return js1;
+	}
+	
+	public static Joystick getJs2() {
+		return js2;
+	}
+	
+	public static Joystick getJs3() {
+		return js3;
+	}
+	
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.

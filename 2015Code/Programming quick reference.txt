@@ -1,0 +1,20 @@
+Programming quick reference:
+
+Declarations:
+Joystick <JOYSTICK_NAME> = new Joystick(<JOYSTICK_PORT_NUMBER>);
+Talon <TALON_NAME> = new Talon(<TALON_PORT_NUMBER>);
+Relay <RELAY_NAME> = new Talon(<RELAY_PORT_NUMBER>);
+RobotDrive <ROBOT_DRIVE_NAME> = new RobotDrive(<TALON_1_PORT_NUMBER>, <TALON_2_PORT_NUMBER>, <TALON_3_PORT_NUMBER>, <TALON_4_PORT_NUMBER>);
+
+Useful Methods:
+joystick.getX(); //Gets the X axis on the joystick and goes from -1 to 1
+joystick.getY(); //Gets the Y axis on the joystick and goes from -1 to 1
+joystick.getZ(); //Gets the Z axis on the joystick and goes from -1 to 1
+joystick.getTwist(); //Gets the twist on the joystick and goes from -1 to 1
+joystick.getRawButton(<BUTTON_NUMBER>); //Returns the state of the button given by the number indicated (true when the button is pressed, false when it is not)
+joystick.getTrigger(); //Returns the state of the trigger (true when the trigger is pressed, false when it is not)
+
+talon.set(<SPEED>); //Sets the speed on the talon.  Speed goes from -1 to 1
+
+drive.arcadeDrive(<MOVE_VALUE>, <ROTATE_VALUE>); //Tells the robot to drive forward at the speed given by MOVE_VALUE and turn at the same time by the speed given by MOVE_VALUE
+mecanumDrive_Polar(<MAGNITUDE>, <DIRECTION>, <ROTATION>); //Tells a robot with mecanum weels to drive in direction (direction is measured in degrees) at speed magnitude and to rotate at rate rotation

@@ -5,8 +5,7 @@ import org.usfirst.frc.team3328.robot.Robot;
 import robotemulator.Joystick;
 import robotemulator.RobotDrive;
 
-//import edu.wpi.first.wpilibj.*;
-//import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Driver {
 	
@@ -33,7 +32,7 @@ public class Driver {
 		double direction = Math.toDegrees(Math.atan2(y, x));
 		
 		drive.mecanumDrive_Polar(magnitude, direction, moveStick.getTwist());
-		//Timer.delay(0.1);
+		Timer.delay(0.1);
 	}
 	
 	private boolean forward = true;
@@ -44,7 +43,7 @@ public class Driver {
 	
 	public void autonomousPeriodic() {
 		drive.mecanumDrive_Polar((1/counter), forward ? 90 : 270, 0);
-		//Timer.delay(0.5);
+		Timer.delay(0.5);
 		
 		counter++;
 		

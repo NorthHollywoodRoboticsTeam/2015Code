@@ -1,6 +1,4 @@
-
 package org.usfirst.frc.team3328.robot;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,14 +70,14 @@ public class Robot extends IterativeRobot {
     
     public void onButtonPress(int joystickNumber, int buttonNumber, Action action) {
     	final Joystick js = joystickNumber == 1 ? js1 : js2;
-    	addPreterateTrigger(new Predicate() {
+    	addPreteriteTrigger(new Predicate() {
 			@Override
 			public boolean test() {
 				return js.getRawButton(buttonNumber);
 				
 			}}, new StateChangeEvent() {
 				@Override
-				public void sateChanged(boolean newVal) {
+				public void stateChanged(boolean newVal) {
 					if (newVal) {
 						action.perform();
 					}
@@ -89,14 +87,14 @@ public class Robot extends IterativeRobot {
     
     public void onButtonRelease(int joystickNumber, int buttonNumber, Action action) {
     	final Joystick js = joystickNumber == 1 ? js1 : js2;
-    	addPreterateTrigger(new Predicate() {
+    	addPreteriteTrigger(new Predicate() {
 			@Override
 			public boolean test() {
 				return js.getRawButton(buttonNumber);
 				
 			}}, new StateChangeEvent() {
 				@Override
-				public void sateChanged(boolean newVal) {
+				public void stateChanged(boolean newVal) {
 					if (!newVal) {
 						action.perform();
 					}
@@ -105,18 +103,19 @@ public class Robot extends IterativeRobot {
     }
     
     public void processEvents() {
-    	for (int i = 0; i < activeTrigers.size(); i++) {
-    		boolean cuurentVal = activeTrigers.get(i).p.test();
-    		if (cuurentVal != activeTrigers.get(i).lastVal) {
-    			activeTrigers.get(i).lastVal = cuurentVal;
-    			activeTrigers.get(i).e.sateChanged(cuurentVal);
+    	for (int i = 0; i < activeTriggers.size(); i++) {
+    		boolean currentVal = activeTriggers.get(i).p.test();
+    		if (currentVal != activeTriggers.get(i).lastVal) {
+    			activeTriggers.get(i).lastVal = currentVal;
+    			activeTriggers.get(i).e.stateChanged(currentVal);
     		}
     	}
     }
     
-    List<PredicatePackage> activeTrigers = new ArrayList<PredicatePackage>();
-    public void addPreterateTrigger(Predicate condition, StateChangeEvent event) {
-    	activeTrigers.add(new PredicatePackage(condition, event, condition.test()));
+    List<PredicatePackage> activeTriggers = new ArrayList<PredicatePackage>();
+    
+    public void addPreteriteTrigger(Predicate condition, StateChangeEvent event) {
+    	activeTriggers.add(new PredicatePackage(condition, event, condition.test()));
     }
     
 }

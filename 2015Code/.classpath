@@ -5,8 +5,8 @@
 	<classpathentry kind="lib" path="libs/guava-18.0.jar"/>
 	<classpathentry kind="lib" path="libs/javassist.jar"/>
 	<classpathentry kind="lib" path="libs/reflections-0.9.9-RC1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/WPILib.jar" sourcepath="libs/WPILib-sources.jar"/>
 	<classpathentry kind="lib" path="libs/NetworkTables.jar" sourcepath="libs/NetworkTables-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

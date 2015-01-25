@@ -3,10 +3,11 @@ package org.usfirst.frc.team3328.robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.usfirst.frc.team3328.components.Driver;
 import org.usfirst.frc.team3328.framework.*;
 
-//import edu.wpi.first.wpilibj.*;
-import robotemulator.*;
+import edu.wpi.first.wpilibj.*;
+//import robotemulator.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -20,10 +21,14 @@ public class Robot extends IterativeRobot {
 	static Joystick js2;
 	static Joystick js3;
 	
+	private Driver driver;
+	
 	public Robot() {
 		js1 = new Joystick(1);
 		js2 = new Joystick(2);
 		js3 = new Joystick(3);
+		
+		driver = new Driver();
 	}
 	
 	public static Joystick getJs1() {
@@ -44,13 +49,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	
+    	driver.init();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	driver.autonomousPeriodic();
 
     }
 
@@ -59,13 +65,13 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	processEvents();
+    	driver.teleopPeriodic();
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    
     }
     
     public void onButtonPress(int joystickNumber, int buttonNumber, Action action) {

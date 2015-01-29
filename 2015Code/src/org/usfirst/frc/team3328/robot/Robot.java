@@ -8,6 +8,7 @@ import org.usfirst.frc.team3328.framework.*;
 
 import edu.wpi.first.wpilibj.*;
 //import robotemulator.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -17,9 +18,9 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Robot extends IterativeRobot {
 	
-	static Joystick js1;
-	static Joystick js2;
-	static Joystick js3;
+	private static Joystick js1;
+	private static Joystick js2;
+	private static Joystick js3;
 	
 	private Driver driver;
 	
@@ -28,7 +29,7 @@ public class Robot extends IterativeRobot {
 		js2 = new Joystick(2);
 		js3 = new Joystick(3);
 		
-		driver = new Driver();
+		driver = new Driver(js1);
 	}
 	
 	public static Joystick getJs1() {
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	driver.init();
+    	//driver.init();
     }
 
     /**

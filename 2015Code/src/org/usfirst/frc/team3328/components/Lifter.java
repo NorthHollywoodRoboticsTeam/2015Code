@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3328.components;
 
-import org.usfirst.frc.team3328.robot.Robot;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Talon;
 //import robotemulator.*;
 
 public class Lifter {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.usfirst.frc.team3328.components.Driver;
+import org.usfirst.frc.team3328.components.Gripper;
+import org.usfirst.frc.team3328.components.Lifter;
 import org.usfirst.frc.team3328.framework.*;
 
 import edu.wpi.first.wpilibj.*;
@@ -23,6 +25,8 @@ public class Robot extends IterativeRobot {
 	private static Joystick js3;
 	
 	private Driver driver;
+	private Lifter lifter;
+	private Gripper gripper;
 	
 	public Robot() {
 		js1 = new Joystick(1);
@@ -30,6 +34,8 @@ public class Robot extends IterativeRobot {
 		js3 = new Joystick(3);
 		
 		driver = new Driver(js1);
+		lifter = new Lifter(js2);
+		gripper = new Gripper();
 	}
 	
 	public static Joystick getJs1() {
@@ -50,7 +56,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	//driver.init();
+    	driver.init();
+    	lifter.init();
+    	gripper.init();
     }
 
     /**
@@ -58,7 +66,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	driver.autonomousPeriodic();
-
+    	lifter.autonomousPeriodic();
+    	gripper.autonomousPeriodic();
     }
 
     /**
@@ -67,6 +76,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	processEvents();
     	driver.teleopPeriodic();
+    	lifter.teleopPeriodic();
+    	gripper.teleopPeriodic();
     }
     
     /**

@@ -21,9 +21,9 @@ public class Driver {
 		
 		//frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor
 		drive = new RobotDrive(
-				new SplitSpeedController(new Talon(0), new Talon(4)),
+				new Talon(0),
 				new Talon(2),
-				new SplitSpeedController(new Talon(1), new Talon(5)),
+				new Talon(1),
 				new Talon(3)
 			);
 	}

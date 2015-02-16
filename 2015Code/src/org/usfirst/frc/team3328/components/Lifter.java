@@ -16,7 +16,7 @@ public class Lifter {
 	
 	DigitalInput limitSwitch = new DigitalInput(0);  //Pressed must be a 1 vale
 	
-	Encoder encoder = new Encoder(1, 2);
+	Encoder encoder = new Encoder(1, 2); //Encoder + is clockwise when looking down.
 	
 	Joystick controlStick;
 	

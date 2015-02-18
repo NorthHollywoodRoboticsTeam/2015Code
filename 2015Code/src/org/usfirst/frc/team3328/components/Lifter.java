@@ -2,36 +2,36 @@ package org.usfirst.frc.team3328.components;
 
 import edu.wpi.first.wpilibj.*;
 
-//import robotemulator.*;
-
 public class Lifter {
-
 	
 	private static final int DOWN_ENCODER_VALUE = -500;
 	private static final int MID_ENCODER_VALUE = -250;
-	private static final int UP_ENCODER_VALUE = -0;
-	private static final int MARGEN_OF_ERROR = 20;
+	private static final int UP_ENCODER_VALUE = 0;
+	private static final int MARGIN_OF_ERROR = 20;
 	
-	Talon lifterTalon = new Talon(4);
-	
-	DigitalInput limitSwitch = new DigitalInput(0);  //Pressed must be a 1 vale
-	
-	Encoder encoder = new Encoder(1, 2); //Encoder + is clockwise when looking down.
+	private Talon lifterTalon;
+	private DigitalInput limitSwitch;
+	private Encoder encoder;
 	
 	Joystick controlStick;
 	
 	public Lifter(Joystick controlStick) {
 		this.controlStick = controlStick;
+		
+		lifterTalon = new Talon(4);
+		limitSwitch = new DigitalInput(0);  //Pressed must be a 1 value
+		encoder = new Encoder(1, 2); //Encoder + is clockwise when looking down.
 	}
 	
 	
 	public void init() {
+		
 	}
-	
 	
 	//Positive encoder vals mean up
 	int lifterDirection = 0;
 	int targetPostition = 0;
+	
 	public void teleopPeriodic() {
 		if (controlStick.getRawButton(1)) {
 			targetPostition = DOWN_ENCODER_VALUE;
@@ -42,9 +42,9 @@ public class Lifter {
 		if (controlStick.getRawButton(3)) {
 			targetPostition = UP_ENCODER_VALUE;
 		} 
-		if (encoder.get() < targetPostition - MARGEN_OF_ERROR) {
+		if (encoder.get() < targetPostition - MARGIN_OF_ERROR) {
 			lifterDirection = 1;
-		} else if (encoder.get() > targetPostition + MARGEN_OF_ERROR) {
+		} else if (encoder.get() > targetPostition + MARGIN_OF_ERROR) {
 			lifterDirection = -1;
 		} else {
 			lifterDirection = 0;

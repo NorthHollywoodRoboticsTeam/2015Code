@@ -9,7 +9,6 @@ import org.usfirst.frc.team3328.components.Lifter;
 import org.usfirst.frc.team3328.framework.*;
 
 import edu.wpi.first.wpilibj.*;
-//import robotemulator.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,13 +19,11 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Robot extends IterativeRobot {
 	
-	private static Joystick js1;
-	private static Joystick js2;
-	private static Joystick js3;
+	private final Joystick js1, js2, js3;
 	
-	private Driver driver;
-	private Lifter lifter;
-	private Gripper gripper;
+	private final Driver driver;
+	private final Lifter lifter;
+	private final Gripper gripper;
 	
 	public Robot() {
 		js1 = new Joystick(1);
@@ -35,21 +32,8 @@ public class Robot extends IterativeRobot {
 		
 		driver = new Driver(js1);
 		lifter = new Lifter(js2);
-		gripper = new Gripper();
+		gripper = new Gripper(js3);
 	}
-	
-	public static Joystick getJs1() {
-		return js1;
-	}
-	
-	public static Joystick getJs2() {
-		return js2;
-	}
-	
-	public static Joystick getJs3() {
-		return js3;
-	}
-	
 	
     /**
      * This function is run when the robot is first started up and should be

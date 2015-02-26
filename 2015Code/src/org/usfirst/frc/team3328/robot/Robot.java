@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 		
 		driver = new Driver(js1);
 		lifter = new Lifter(js2);
-		gripper = new Gripper(js3);
+		gripper = new Gripper(js2);
 	}
 	
     /**

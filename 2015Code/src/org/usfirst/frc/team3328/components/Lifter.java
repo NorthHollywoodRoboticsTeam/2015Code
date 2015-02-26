@@ -33,13 +33,13 @@ public class Lifter {
 	int targetPostition = 0;
 	
 	public void teleopPeriodic() {
-		if (controlStick.getRawButton(1)) {
+		if (controlStick.getRawButton(6)) {
 			targetPostition = DOWN_ENCODER_VALUE;
 		}
-		if (controlStick.getRawButton(2)) {
+		if (controlStick.getRawButton(7)) {
 			targetPostition = MID_ENCODER_VALUE;
 		}
-		if (controlStick.getRawButton(3)) {
+		if (controlStick.getRawButton(8)) {
 			targetPostition = UP_ENCODER_VALUE;
 		} 
 		if (encoder.get() < targetPostition - MARGIN_OF_ERROR) {

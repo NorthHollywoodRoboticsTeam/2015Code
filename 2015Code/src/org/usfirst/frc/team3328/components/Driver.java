@@ -32,7 +32,7 @@ public class Driver {
        	RR = new Talon(3);
         
         robotDrive = new RobotDrive(FL,RL,FR,FL); //Drive System - 4 Motors
-        denc0 = new Encoder(0,1); //Encoder for motor(s) 0
+        denc0 = new Encoder(4,5); //Encoder for motor(s) 0
 	}
 	
 	public void init() {
@@ -100,7 +100,6 @@ public class Driver {
        	RL.set(-1 * limit(-Xval + Yval +Zval));
        	FR.set(limit(-Xval + Yval - Zval));
        	RR.set(limit(Xval + Yval - Zval));
-        Timer.delay(0.005);		// wait for a motor update time
         
         /*
         liftR.set(auxiliaryStick.getY());

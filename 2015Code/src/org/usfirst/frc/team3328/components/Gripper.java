@@ -14,6 +14,7 @@ public class Gripper {
 	
 	public Gripper(Joystick controlStick) {
 		this.controlStick = controlStick;
+		this.currentState = GripState.HOLD;
 	}
 	
 	public void init() {

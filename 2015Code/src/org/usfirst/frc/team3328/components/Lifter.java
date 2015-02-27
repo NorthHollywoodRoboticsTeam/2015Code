@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj.*;
 
 public class Lifter {
 	
-	private static final int DOWN_ENCODER_VALUE = -500;
-	private static final int MID_ENCODER_VALUE = -250;
-	private static final int UP_ENCODER_VALUE = 0;
+	private static final int DOWN_ENCODER_VALUE = -50;//All values here subject to change.
+	private static final int ONE_TOTE_DISTANCE = 1000;
 	private static final int MARGIN_OF_ERROR = 20;
+	
+	private static final double DEFAULT_LIFTER_SPEED = .9;
 	
 	private Talon lifterTalon;
 	private DigitalInput limitSwitch;
@@ -29,34 +30,34 @@ public class Lifter {
 	}
 	
 	//Positive encoder vals mean up
-	int lifterDirection = 0;
+	double lifterDirection = 0;
 	int targetPostition = 0;
 	
 	public void teleopPeriodic() {
-		if (controlStick.getRawButton(6)) {
+		
+		System.out.println("encoder val from lifter: " + encoder.get());
+		System.out.println("Target position from lifter: " + targetPostition);
+		if (controlStick.getRawAxis(6) < -.5) {
+			targetPostition -= ONE_TOTE_DISTANCE;
+		}
+		if (controlStick.getRawAxis(6) > .5) {
+			targetPostition += ONE_TOTE_DISTANCE;
+		}
+		if (controlStick.getRawButton(3) || controlStick.getRawButton(4)) {
 			targetPostition = DOWN_ENCODER_VALUE;
 		}
-		if (controlStick.getRawButton(7)) {
-			targetPostition = MID_ENCODER_VALUE;
-		}
-		if (controlStick.getRawButton(8)) {
-			targetPostition = UP_ENCODER_VALUE;
-		} 
+		
 		if (encoder.get() < targetPostition - MARGIN_OF_ERROR) {
-			lifterDirection = 1;
+			lifterDirection = DEFAULT_LIFTER_SPEED;
 		} else if (encoder.get() > targetPostition + MARGIN_OF_ERROR) {
-			lifterDirection = -1;
+			lifterDirection = -DEFAULT_LIFTER_SPEED;
 		} else {
 			lifterDirection = 0;
 		}
 		
 		//Manual override
-		if (controlStick.getRawButton(4)) {
-			lifterDirection = -1;
-			targetPostition = encoder.get();
-		} else if (controlStick.getRawButton(5)) {
-			lifterDirection = 1;
-			targetPostition = encoder.get();
+		if (controlStick.getY() != 0) {
+			lifterDirection = controlStick.getY();
 		}
 		
 		if (limitSwitch.get()) {
@@ -66,23 +67,7 @@ public class Lifter {
 			}
 		}
 		
-		switch (lifterDirection) {
-		case -1:
-			lifterTalon.set(-1);
-			break;
-		case 0:
-			lifterTalon.set(0);
-			break;
-		case 1:
-			lifterTalon.set(1);
-			break;
-		default:
-			System.out.println("Error: invalid lifter direction: " + lifterDirection);
-			lifterTalon.set(0);
-		}
-		
-		
-		
+		lifterTalon.set(lifterDirection);
 	}
 
 	public void autonomousPeriodic() {

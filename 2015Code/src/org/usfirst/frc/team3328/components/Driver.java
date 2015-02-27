@@ -1,130 +1,74 @@
 package org.usfirst.frc.team3328.components;
 
-import edu.wpi.first.wpilibj.Encoder;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 
 
 public class Driver {
 	
-    private Talon FL, RL, FR, RR;
-    private RobotDrive robotDrive;
-    private Joystick driveStick;
-    private Encoder denc0;
-    
-    private final double PULSE_TO_INCH_D = 8.19; //The number of pulses per inch for drive. 
-    private final double PULSE_TO_INCH_L = 114.60; //The number of pulses per inch for lift.
-    private enum RoboState { Forward, Backward, Left, Right, Lift }
+
+	// Controls both movement + rotation
+	private Joystick moveStick;
+	private SpeedController frontLeft = new Talon(0),
+	rearLeft = new Talon(2),
+	frontRight = new Talon(1),
+	rearRight = new Talon(3);
 	
-	public Driver(Joystick driveStick) {
-		
-		this.driveStick = driveStick;
-		
-    	//				  FRONT OF ROBOT
-    	// Front Left <---- 0        2 ----> Front Right
-    	// Rear Left  <---- 1        3 ----> Rear Right
-    	//				   REAR OF ROBOT
-        FL = new Talon(0);
-       	RL = new Talon(1);
-       	FR = new Talon(2);
-       	RR = new Talon(3);
-        
-        robotDrive = new RobotDrive(FL,RL,FR,FL); //Drive System - 4 Motors
-        denc0 = new Encoder(4,5); //Encoder for motor(s) 0
+	public Driver(Joystick controlStick) {
+		moveStick = controlStick;
 	}
 	
 	public void init() {
-        robotDrive.setSafetyEnabled(false);
-        robotDrive.setExpiration(0.1); //Watchdog timer expiration
-        denc0.reset();
 	}
 	
-	public void autonomousPeriodic() {	
-        moveAutonomous(RoboState.Forward, 12.0);        
-        moveAutonomous(RoboState.Right, 12.0);
-        moveAutonomous(RoboState.Backward, 12.0);
-        moveAutonomous(RoboState.Left, 12.0);
+	public void mecDrive(double forward, double turnRight, double strafeRight) {
+	double FL = clamp(forward + turnRight + strafeRight);
+	double RL = clamp(forward + turnRight - strafeRight);
+	double FR = clamp(forward - turnRight - strafeRight);
+	double RR = clamp(forward - turnRight + strafeRight);
+	/*frontLeft.set(FL);
+	rearLeft.set(.9*RL);
+	frontRight.set(.97*-FR);
+	rearRight.set(.9*-RR);*/
+	frontLeft.set(-FL);
+	rearLeft.set(-RL);
+	frontRight.set(FR);
+	rearRight.set(RR);
 	}
-	
-    /** Used to make the motors run and move the robot in mecanum mode
-     * and set to run for the provided distance. Currently, this only 
-     * utilizes one out of four encoders, due to the limitations of the
-     * mecanumDrive class. If individual wheel control is utilized, then 
-     * this MUST be modified. 
-     * @param state The type of motion desired for the robot. Uses enum values
-     * @param distance The distance that the robot is to travel, in inches. 
-     */
-    private void moveAutonomous(RoboState state, Double distance){
-    	switch (state){
-    	case Forward: 	denc0.setReverseDirection(false);
-    					while(denc0.get() < (int)(distance * PULSE_TO_INCH_D)){
-    						robotDrive.mecanumDrive_Polar(.5, 90, 0);
-    					}
-    					denc0.reset();
-    					break;
-    	case Backward: 	denc0.setReverseDirection(true);
-    					while(denc0.get() < (int)(distance * PULSE_TO_INCH_D)){
-    						robotDrive.mecanumDrive_Polar(.5, 270, 0);
-    					}
-    					denc0.reset();
-    					break;
-    	case Left: 		denc0.setReverseDirection(true);
-						while(denc0.get() < (int)(distance * PULSE_TO_INCH_D)){
-							robotDrive.mecanumDrive_Polar(.5, 180, 0);
-						}
-						denc0.reset();
-						break;
-    	case Right: 	denc0.setReverseDirection(false);
-						while(denc0.get() < (int)(distance * PULSE_TO_INCH_D)){
-							robotDrive.mecanumDrive_Polar(.5, 0, 0);
-						}
-						denc0.reset();
-						break;
-    	default: 		System.out.println("Received invalid RoboState value.");
-    	}
-    }
-	
+	public double clamp(double val) {
+	if (val > 1) {
+	return 1;
+	} else if (val < -1) {
+	return -1;
+	} else {
+	return val;
+	}
+	}
 	public void teleopPeriodic() {
-    	/*****************************************************
-    	 * TODO: Add Encoders: 5, PWM INPUT    
-    	 * Add Lifter Motors: 4, Talons OUTPUT --Done
-    	 * Add Gripper Motor: 1, Spike OUTPUT  --Done
-    	 *****************************************************/
-        double Yval = driveStick.getY();
-        double Xval = -driveStick.getX();
-        double Zval = -driveStick.getZ();
-        
-    	FL.set(-1 * limit(Xval + Yval + Zval));
-       	RL.set(-1 * limit(-Xval + Yval +Zval));
-       	FR.set(limit(-Xval + Yval - Zval));
-       	RR.set(limit(Xval + Yval - Zval));
-        
-        /*
-        liftR.set(auxiliaryStick.getY());
-        liftL.set(-(auxiliaryStick.getY()));
-        
-        if(auxiliaryStick.getRawButton(6) && !(auxiliaryStick.getRawButton(4))){
-        	grip.set(Relay.Value.kForward);
-        }
-        
-        else if(auxiliaryStick.getRawButton(4) && !(auxiliaryStick.getRawButton(6))){
-        	grip.set(Relay.Value.kReverse);
-        }
-        else{
-        	grip.set(Relay.Value.kOff);
-        }
-        */
+	double x = moveStick.getX();
+	double y = moveStick.getY();
+	//Old driving using builtin. Did not work, replaced with hand code from 2014.
+	//double magnitude = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+	// To control the max speed via z axis:
+	//double magnitude = moveStick.getZ() * Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+	// Will compute to a value in the range of -180 to 180 degrees.
+	//double direction = Math.toDegrees(Math.atan2(y, x));
+	mecDrive(y, -moveStick.getTwist(), -x);
 	}
-	
-    private static double limit(double num) {
-        if (num > 1.0) {
-            return 1.0;
-        }
-        if (num < -1.0) {
-            return -1.0;
-        }
-        return num;
-    }
+	private boolean forward = true;
+	private int counter = 1;
+	// Test function, moves robot back and forth between two locations.
+	// Starts out full speed, slows to a stop.
+	public void autonomousPeriodic() {
+	//TODO: Drive
+	Timer.delay(0.5);
+	counter++;
+	if (counter == 4) {
+	counter = 1;
+	forward = !forward;
+	}
+	}
 }

@@ -19,20 +19,19 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Robot extends IterativeRobot {
 	
-	private final Joystick js1, js2, js3;
+	private final Joystick js0, js1;
 	
 	private final Driver driver;
 	private final Lifter lifter;
 	private final Gripper gripper;
 	
 	public Robot() {
+		js0 = new Joystick(0);
 		js1 = new Joystick(1);
-		js2 = new Joystick(2);
-		js3 = new Joystick(3);
 		
-		driver = new Driver(js1);
-		lifter = new Lifter(js2);
-		gripper = new Gripper(js2);
+		driver = new Driver(js0);
+		lifter = new Lifter(js1);
+		gripper = new Gripper(js1);
 	}
 	
     /**
@@ -71,7 +70,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void onButtonPress(int joystickNumber, int buttonNumber, Action action) {
-    	final Joystick js = joystickNumber == 1 ? js1 : js2;
+    	final Joystick js = joystickNumber == 0 ? js0 : js1;
     	addPreteriteTrigger(new Predicate() {
 			@Override
 			public boolean test() {
@@ -88,7 +87,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void onButtonRelease(int joystickNumber, int buttonNumber, Action action) {
-    	final Joystick js = joystickNumber == 1 ? js1 : js2;
+    	final Joystick js = joystickNumber == 0 ? js0 : js1;
     	addPreteriteTrigger(new Predicate() {
 			@Override
 			public boolean test() {

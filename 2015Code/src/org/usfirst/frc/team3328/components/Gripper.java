@@ -17,20 +17,31 @@ public class Gripper {
 		
 	}
 	
+	public double clamp(double val) {
+		if (val > 1) {
+			return 1;
+		} else if (val < -1) {
+			return -1;
+		} else {
+			return val;
+		}
+	}
+	//Positive talon speeds close gripper.
 	private double talonSpeed = 0;
 	public void teleopPeriodic() {
+		
 		talonSpeed = 0;
-		if (controlStick.getRawButton(11)) {
+		if (controlStick.getRawButton(9)) {
 			talonSpeed = -.9;
 		}
-		if (controlStick.getRawButton(12)) {
+		if (controlStick.getRawButton(10)) {
 			talonSpeed = .9;
 		}
-		
-		if (controlStick.getRawAxis(3) > .5) {
+		if (-controlStick.getThrottle() > 0) {
 			talonSpeed += .1;
 		}
-		gripperTalon.set(talonSpeed);
+		
+		gripperTalon.set(clamp(-talonSpeed));
 	}
 	
 	public void autonomousPeriodic() {

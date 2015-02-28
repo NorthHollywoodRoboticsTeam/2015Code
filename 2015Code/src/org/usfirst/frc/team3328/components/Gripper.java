@@ -31,10 +31,10 @@ public class Gripper {
 	public void teleopPeriodic() {
 		
 		talonSpeed = 0;
-		if (controlStick.getRawButton(9)) {
+		if (controlStick.getRawButton(9) || controlStick.getRawButton(1)) {
 			talonSpeed = -.9;
 		}
-		if (controlStick.getRawButton(10)) {
+		if (controlStick.getRawButton(10) || controlStick.getTrigger()) {
 			talonSpeed = .9;
 		}
 		if (-controlStick.getThrottle() > 0) {

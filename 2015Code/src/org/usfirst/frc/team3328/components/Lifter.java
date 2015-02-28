@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.*;
 public class Lifter {
 	
 	private static final int DOWN_ENCODER_VALUE = -Integer.MIN_VALUE;//All values here subject to change.
-	private static final int ONE_TOTE_DISTANCE = 80;
+	private static final int ONE_TOTE_DISTANCE = 83;
 	private static final int MARGIN_OF_ERROR = 20;
 	
 	private static final double DEFAULT_LIFTER_SPEED_UP = .5;
@@ -41,10 +41,8 @@ public class Lifter {
 		//System.out.println(controlStick.getPOV());
 		if (160 < controlStick.getPOV() && controlStick.getPOV() < 200) {
 			targetPostition -= ONE_TOTE_DISTANCE;
-			System.out.println("Moving one tote down");
 		}
 		if (controlStick.getPOV() == 0) {
-			System.out.println("Moving one tote up");
 			targetPostition += ONE_TOTE_DISTANCE;
 		}
 		if (controlStick.getRawButton(3) || controlStick.getRawButton(4)) {

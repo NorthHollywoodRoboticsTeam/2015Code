@@ -57,19 +57,24 @@ public class Driver {
 		//double magnitude = moveStick.getZ() * Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 		// Will compute to a value in the range of -180 to 180 degrees.
 		//double direction = Math.toDegrees(Math.atan2(y, x));
-		mecDrive(y, -moveStick.getTwist(), -x);
+		mecDrive(y, -moveStick.getTwist() / 3, -x);//+ y = backwards
 	}
 	private boolean forward = true;
 	private int counter = 1;
 	// Test function, moves robot back and forth between two locations.
 	// Starts out full speed, slows to a stop.
+	
+	private long autoStartTime = -1;
 	public void autonomousPeriodic() {
-		//TODO: Drive
-		Timer.delay(0.5);
-		counter++;
-		if (counter == 4) {
-			counter = 1;
-			forward = !forward;
+		/*if (autoStartTime == -1) {
+			autoStartTime = System.currentTimeMillis();
 		}
+		//TODO: Drive
+		if (System.currentTimeMillis() - autoStartTime < 4000) {
+			mecDrive(1, 0, 0);
+		} else {
+			mecDrive(0, 0, 0);
+		}*/
+		
 	}
 }

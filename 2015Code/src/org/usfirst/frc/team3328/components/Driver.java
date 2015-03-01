@@ -85,13 +85,16 @@ public class Driver {
 			autoStartTime = System.currentTimeMillis();
 		}
 		//TODO: Drive
-		if (System.currentTimeMillis() - autoStartTime < 1000) {
+		long elapsedTime = System.currentTimeMillis() - autoStartTime;
+		if (elapsedTime < 1000) {
 			mecDrive(.5, 0, 0);
+		} else if (elapsedTime > 7000 && elapsedTime < 8560) {
+			mecDrive(0, 1.0 / 3.0, 0);
 		} else {
-			mecDrive(0, 0, 0);
+			mecDrive(0,0,0);
 		}
-		
-	}
+		 
+	}   
 	
 	public void disabledInit() {
     	// TODO Auto-generated method stub

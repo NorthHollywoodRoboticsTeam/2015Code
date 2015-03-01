@@ -49,15 +49,30 @@ public class Driver {
 	}
 	public void teleopPeriodic() {
 		//System.out.println("move stick:  " + moveStick.getY());
-		double x = moveStick.getX();
-		double y = moveStick.getY();
+		double x, y, rotate;
+		if (-moveStick.getThrottle() > 0) {
+			x = moveStick.getX();
+			y = -moveStick.getY();
+			rotate = -moveStick.getTwist();
+		}
+		else {
+			x = moveStick.getX() / 3;
+			y = -moveStick.getY() / 3;
+			rotate = -moveStick.getTwist() / 3;
+		}
 		//Old driving using builtin. Did not work, replaced with hand code from 2014.
 		//double magnitude = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 		// To control the max speed via z axis:
 		//double magnitude = moveStick.getZ() * Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 		// Will compute to a value in the range of -180 to 180 degrees.
 		//double direction = Math.toDegrees(Math.atan2(y, x));
-		mecDrive(y, -moveStick.getTwist() / 3, -x);//+ y = backwards
+		if (moveStick.getRawButton(10)) {
+			x += .7;
+		}
+		if (moveStick.getRawButton(9)) {
+			x -= .7;
+		}
+		mecDrive(-y, rotate / 2, -x);//+ y = backwards
 	}
 	private boolean forward = true;
 	private int counter = 1;
@@ -66,15 +81,21 @@ public class Driver {
 	
 	private long autoStartTime = -1;
 	public void autonomousPeriodic() {
-		/*if (autoStartTime == -1) {
+		if (autoStartTime == -1) {
 			autoStartTime = System.currentTimeMillis();
 		}
 		//TODO: Drive
-		if (System.currentTimeMillis() - autoStartTime < 4000) {
-			mecDrive(1, 0, 0);
+		if (System.currentTimeMillis() - autoStartTime < 1000) {
+			mecDrive(.5, 0, 0);
 		} else {
 			mecDrive(0, 0, 0);
-		}*/
+		}
 		
 	}
+	
+	public void disabledInit() {
+    	// TODO Auto-generated method stub
+    	
+    	autoStartTime = -1;
+    }
 }

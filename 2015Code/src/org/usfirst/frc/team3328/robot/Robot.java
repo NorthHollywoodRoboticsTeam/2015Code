@@ -52,6 +52,13 @@ public class Robot extends IterativeRobot {
     	lifter.autonomousPeriodic();
     	gripper.autonomousPeriodic();
     }
+    @Override
+    public void disabledInit() {
+    	// TODO Auto-generated method stub
+    	super.disabledInit();
+    	driver.disabledInit();
+    	
+    }
 
     /**
      * This function is called periodically during operator control

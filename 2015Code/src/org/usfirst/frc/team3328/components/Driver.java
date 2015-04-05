@@ -58,7 +58,7 @@ public class Driver {
 		else {
 			x = moveStick.getX() / 3;
 			y = -moveStick.getY() / 3;
-			rotate = -moveStick.getTwist() / 3;
+			rotate = -moveStick.getTwist();
 		}
 		//Old driving using builtin. Did not work, replaced with hand code from 2014.
 		//double magnitude = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
@@ -88,12 +88,12 @@ public class Driver {
 		long elapsedTime = System.currentTimeMillis() - autoStartTime;
 		if (elapsedTime < 1000) {
 			mecDrive(.5, 0, 0);
-		} else if (elapsedTime > 7000 && elapsedTime < 8560) {
+		} else if (elapsedTime > 6500 && elapsedTime < 8500) {
 			mecDrive(0, 1.0 / 3.0, 0);
 		} else {
 			mecDrive(0,0,0);
 		}
-		 
+		
 	}   
 	
 	public void disabledInit() {
